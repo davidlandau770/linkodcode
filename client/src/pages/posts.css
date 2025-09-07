@@ -1,0 +1,13 @@
+.posts {
+    width: 80%;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.divPost {
+    max-width: 300px;
+    min-width: 200px;
+    margin: 10px;
+}

@@ -1,11 +1,11 @@
 import './App.css'
-import Post from './comps/post/Post'
+import Posts from './pages/Posts'
 
 function App() {
 
   return (
     <>
-      <Post />
+      <Posts />
     </>
   )
 }
