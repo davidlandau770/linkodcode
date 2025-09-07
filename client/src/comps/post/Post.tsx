@@ -10,7 +10,7 @@ type post = {
     timestamp: string;
 }
 
-export default function Post({ img_url, descripeion, count_likes, count_dislike, username, timestamp }: post) {
+export default function Post({ img_url, descripeion, username, timestamp }: post) {
     const [like, setLike] = useState<string>("off");
     const [dislike, setDislike] = useState<string>("off");
 
