@@ -1,24 +1,23 @@
 import express from "express";
 import cors from "cors";
 import { configRoutes } from "./routes/configRoutes.js";
-import { config } from "dotenv"
+import { config } from "dotenv";
 import cookieParser from "cookie-parser";
-config()
+config();
 
 const PORT = process.env.PORT;
 
-const app = express()
+const app = express();
 app.use(express.json());
 app.use(cors({
     credentials: true,
     origin: "http://localhost:5174",
-    methods: ["GET", "POST"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type","Authorization"]
 }));
-
-app.use(cookieParser())
-
-configRoutes(app)
+app.use(express.static("public"));
+app.use(cookieParser());
+configRoutes(app);
 
 app.use((req, res, next) => {
     res.status(404).send({ msg: "page is not defound" });
