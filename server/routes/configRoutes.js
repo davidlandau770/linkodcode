@@ -1,4 +1,4 @@
-import { user } from "./rLogin.js"
+import { user } from "./accountRoute.js"
 
 const configRoutes = (app) => {
     app.use('/', user)

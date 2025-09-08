@@ -10,11 +10,16 @@ header {
 
 .logo {
     width: 40px;
-    border: 1px solid #FFFFFF;
+    border: 1px solid #fff;
     border-radius: 30px;
     padding: 2px;
 }
 
 .iconAccount {
     width: 38px;
+}
+
+.username {
+    color: #fff;
+    text-decoration-line: none;
 }

@@ -1,0 +1,65 @@
+.inputsAccount {
+    display: flex;
+    flex-direction: column;
+    min-width: 250px;
+    /* border: 1px solid red; */
+    margin: 10px 0;
+}
+
+.labelAccount {
+    font-weight: 600;
+    padding: 8px 0;
+}
+
+.inputAccount {
+    padding: 10px;
+    background-color: rgb(246, 246, 255);
+    border: 1px solid #aaa;
+    border-radius: 5px;
+    margin: 5px 0;
+}
+
+.redColor {
+    color: red;
+    padding: 2px;
+}
+
+.toTurnPageAccount {
+    color: #013E6D;
+    text-decoration-line: underline;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .85em;
+}
+
+.toTurnPageAccount img {
+    width: 10px;
+    margin-left: 10px;
+}
+
+.errorDivAccount {
+    background-color: red;
+}
+
+.errorDivAccount .resultAccount {
+    color: rgb(255, 186, 186);
+    font-size: .8em;
+}
+
+.goodDivAccount {
+    background-color: rgba(0, 128, 0, 0.6);
+}
+
+.goodDivAccount .resultAccount {
+    color: rgb(216, 255, 216);
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.errorsAccount {
+    color: red;
+    font-size: .7em;
+    text-align: left;
+    margin-bottom: 10px;
+}

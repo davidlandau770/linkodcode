@@ -37,6 +37,7 @@
 
 .imgLike {
     width: 25px;
+    cursor: pointer;
 }
 
 .aboutPost {

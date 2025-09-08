@@ -1,17 +1,16 @@
-import { Route, Routes } from 'react-router'
+import { useState } from 'react';
 import './App.css'
-import Layout from './comps/application-layout/Layout'
-import Posts from './pages/Posts'
+import ConfigRoutes from './pages/configRoutes'
+import { AuthContext } from './context/authContext';
 
 function App() {
+  const [user, setUser] = useState<{ username: string; permission: string } | null>(null);
 
   return (
     <>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Posts />} />
-        </Route>
-      </Routes>
+      <AuthContext.Provider value={{ user, setUser }}>
+        <ConfigRoutes />
+      </AuthContext.Provider>
     </>
   )
 }
