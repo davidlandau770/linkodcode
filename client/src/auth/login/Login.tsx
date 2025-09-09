@@ -1,7 +1,7 @@
 import { useContext, useRef, useState } from "react";
 import "./login.css";
 import { Link, useNavigate } from "react-router";
-import { AuthContext } from "../../context/authContext";
+import { AuthContext } from "../../context/AuthContext";
 
 export type Account = {
   username: string;

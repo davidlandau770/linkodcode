@@ -1,14 +1,38 @@
 import { getUsersDB } from "../DAL/accountDAL.js";
-import { createPostDB, deletePostDB, readPostDB, readPostsDB, updatePostDB } from "../DAL/postsDAL.js";
+import { createPostDB, deletePostDB, getMaxIdDB, readPostDB, readPostsDB, updatePostDB } from "../DAL/postsDAL.js";
 
 const createPost = async (req, res) => {
+    const body = req.body;
+    let responseMaxID
+    let url_img;
+    try {
+        responseMaxID = await getMaxIdDB();
+        url_img = Number(body.url_img);
+    } catch (error) {
+        return res.status(500).json({ err: `getMaxIdPosts: ${error}` });
+    }
+    const id = responseMaxID[0]?.id ? responseMaxID[0].id + 1 : 1;
+    console.log(body);
+    if (!body.url_img || !body.description || url_img < 0 || url_img > 10) {
+        return res.status(400).json({ msg: `One or more of the values ​​is invalid` });
+    }
+    const obj = {
+        id: id,
+        url_img: body.imgAddress,
+        description: body.description,
+        username_id: 1,
+        count_likes: 0,
+        count_dislikes: 0,
+        timestamp: new Date().toLocaleString()
+    }
+    console.log(obj);
     let response;
     try {
-        response = await createPostDB();
+        response = await createPostDB(obj);
     } catch (error) {
         return res.status(500).json({ err: `createPost: ${error}` });
     }
-
+    res.status(200).json({ msg: "Upload completed successfully!" })
 }
 
 const readPosts = async (req, res) => {

@@ -13,11 +13,10 @@ const signup = async (req, res) => {
     try {
         responseMaxID = await getMaxIdDB();
     } catch (error) {
-        return res.status(500).json({ err: `getUsers: ${error}` });
+        return res.status(500).json({ err: `getMaxIdUsers: ${error}` });
     }
     
     const id = responseMaxID[0]?.id ? responseMaxID[0].id + 1 : 1;
-    console.log(id);
     const name = req.body.username;
     const user = response.some(user => user.username === name)
     if (user) {
@@ -33,10 +32,10 @@ const signup = async (req, res) => {
     try {
         result = await addUserDB(newuser);
     } catch (error) {
-        return res.status(500).send({ err: `Failed write data: ${error}` });
+        return res.status(500).json({ err: `Failed write data: ${error}` });
     }
     console.log(newuser);
-    res.status(200).send({ msg: "successfully registered!" });
+    res.status(200).json({ msg: "successfully registered!" });
 }
 
 const login = async (req, res) => {

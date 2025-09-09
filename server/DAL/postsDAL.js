@@ -31,10 +31,16 @@ const readPostDB = async (postId) => {
     return db.collection('posts').findOne({ id: postId });
 }
 
+const getMaxIdDB = async () => {
+  const db = await connectToMongodb();
+  return await db.collection("posts").find({}).sort({ id: -1 }).limit(1).toArray();
+};
+
 export {
     createPostDB,
     readPostsDB,
     updatePostDB,
     deletePostDB,
-    readPostDB
+    readPostDB,
+    getMaxIdDB
 }

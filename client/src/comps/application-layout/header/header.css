@@ -24,6 +24,12 @@ header {
     padding: 2px;
 }
 
+.addPostLink {
+    color: #fff;
+    text-decoration-line: none;
+    font-size: .8em;
+}
+
 .iconAccount {
     width: 38px;
 }

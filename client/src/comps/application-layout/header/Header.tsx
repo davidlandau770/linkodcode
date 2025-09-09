@@ -11,6 +11,7 @@ export default function Header() {
     <header>
       <Link to={'/'} className="divLinkHome"><img className="logo" src={`${URL}/logo.jpg`} alt="logo" /><p>Home</p></Link>
       <h3>Linkodcode</h3>
+      <Link to={'/add post'} className="addPostLink">Add post</Link>
       {auth?.user?.username && <Link to={'/account'}><p className="username">{auth.user.username}</p></Link>}
       {!auth?.user?.username && <Link to={'/account'}><img className="iconAccount" src={`${URL}/account.png`} alt="icon account" /></Link>}
     </header>
