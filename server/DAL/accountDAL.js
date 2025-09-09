@@ -18,8 +18,14 @@ const updateUserDB = async (id, data) => {
     )
 }
 
+const getMaxIdDB = async () => {
+  const db = await connectToMongodb();
+  return await db.collection("users").find({}).sort({ id: -1 }).limit(1).toArray();
+};
+
 export {
     getUsersDB,
     addUserDB,
-    updateUserDB
+    updateUserDB,
+    getMaxIdDB
 }

@@ -1,3 +1,4 @@
+import { getUsersDB } from "../DAL/accountDAL.js";
 import { createPostDB, deletePostDB, readPostsDB, updatePostDB } from "../DAL/postsDAL.js";
 
 const createPost = async (req, res) => {
@@ -5,19 +6,29 @@ const createPost = async (req, res) => {
     try {
         response = await createPostDB();
     } catch (error) {
-        return res.status(500).json({ msg: `createPost: ${error}` });
+        return res.status(500).json({ err: `createPost: ${error}` });
     }
 
 }
 
 const readPosts = async (req, res) => {
-    let response;
+    let responsePosts;
     try {        
-        response = await readPostsDB();
-    } catch (error) {
-        return res.status(500).json({ msg: `readPosts: ${error}` });
+        responsePosts = await readPostsDB();
+    } catch (error) {        
+        return res.status(500).json({ err: `readPosts: ${error}` });
     }
-    res.json(response);
+    let responseUsers;
+    try {        
+        responseUsers = await getUsersDB();
+    } catch (error) {
+        return res.status(500).json({ err: `getUsers: ${error}` });
+    }
+    responsePosts.map((obj) => {
+        const findUser = responseUsers.find((user) => user.id === obj.username_id)
+        obj.username = findUser.username
+    })
+    res.json(responsePosts);
 }
 
 const updatePost = async (req, res) => {
@@ -25,7 +36,7 @@ const updatePost = async (req, res) => {
     try {
         response = await updatePostDB();
     } catch (error) {
-        return res.status(500).json({ msg: `updatePost: ${error}` });
+        return res.status(500).json({ err: `updatePost: ${error}` });
     }
 
 }
@@ -35,7 +46,7 @@ const deletePost = async (req, res) => {
     try {
         response = await deletePostDB();
     } catch (error) {
-        return res.status(500).json({ msg: `deletePost: ${error}` });
+        return res.status(500).json({ err: `deletePost: ${error}` });
     }
 
 }

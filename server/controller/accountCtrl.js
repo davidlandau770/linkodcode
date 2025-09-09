@@ -1,14 +1,23 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { getUsersDB, addUserDB } from "../DAL/accountDAL.js";
+import { getUsersDB, addUserDB, getMaxIdDB } from "../DAL/accountDAL.js";
 
 const signup = async (req, res) => {
     let response;
     try {
         response = await getUsersDB();
     } catch (error) {
-        return res.status(500).json({ msg: `getUsers: ${error}` });
+        return res.status(500).json({ err: `getUsers: ${error}` });
     }
+    let responseMaxID
+    try {
+        responseMaxID = await getMaxIdDB();
+    } catch (error) {
+        return res.status(500).json({ err: `getUsers: ${error}` });
+    }
+    
+    const id = responseMaxID[0]?.id ? responseMaxID[0].id + 1 : 1;
+    console.log(id);
     const name = req.body.username;
     const user = response.some(user => user.username === name)
     if (user) {
@@ -16,6 +25,7 @@ const signup = async (req, res) => {
     }
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
     const newuser = {
+        id: id,
         username: name,
         password: hashedPassword,
     }
@@ -34,10 +44,10 @@ const login = async (req, res) => {
     const password = req.body.password;
     let response;
     try {
-        
+
         response = await getUsersDB();
     } catch (error) {
-        return res.status(500).json({ msg: `getUsers: ${error}` });
+        return res.status(500).json({ err: `getUsers: ${error}` });
     }
 
     const currentUser = response.find(user => user.username === name);

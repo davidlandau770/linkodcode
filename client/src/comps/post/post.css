@@ -35,9 +35,16 @@
     margin: 0 0 10px;
 }
 
+
 .imgLike {
     width: 25px;
     cursor: pointer;
+}
+
+.divCountLike {
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .aboutPost {

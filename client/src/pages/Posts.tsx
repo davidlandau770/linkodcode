@@ -8,36 +8,46 @@ export type TypePost = {
     description: string;
     count_likes: number;
     count_dislikes: number;
-    username_id: number;
     timestamp: string;
+    username: string;
 }
 
 export default function Posts() {
     const URL = "http://localhost:3000";
     const [posts, setPosts] = useState<TypePost[]>([]);
+    const [hidden, setHidden] = useState<"hidden" | "">("");
+    const [error, setError] = useState<string>("");
 
-    useEffect(() => {
-        const getAllPost = async () => {
-            let data;
-            try {
-                const response = await fetch(`${URL}/posts`, { credentials: "include" })
-                data = await response.json();
-            }
-            catch {
-                console.error("error")
-            }
+    const getAllPost = async () => {
+        let data;
+        try {
+            const response = await fetch(`${URL}/posts`, { credentials: "include" })
+            data = await response.json();
+        }
+        catch {
+            console.error("error")
+        }
+        setHidden("hidden");
+        if (data.err) {
+            setError(data.err)
+        }
+        else {
             setPosts(data)
         }
+    }
 
+    useEffect(() => {
         getAllPost();
     }, [])
 
 
     return (
         <div className='posts'>
+            <h3 className={`loading ${hidden}`}>Loading posts... <img className='imgLoading' src='loading.gif' alt='loading' /></h3>
+            {error !== "" && <h3 className="error">{error}</h3>}
             {posts.map((obj) => (
                 <div className='divPost' key={obj.img_url}>
-                    <Post img_url={obj.img_url} description={obj.description} count_likes={obj.count_likes} count_dislikes={obj.count_dislikes} username_id={obj.username_id} timestamp={obj.timestamp} />
+                    <Post img_url={obj.img_url} description={obj.description} count_likes={obj.count_likes} count_dislikes={obj.count_dislikes} timestamp={obj.timestamp} username={obj.username} />
                 </div>
             ))}
         </div>

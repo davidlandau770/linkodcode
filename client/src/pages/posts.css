@@ -11,3 +11,21 @@
     min-width: 200px;
     margin: 10px;
 }
+
+h3.hidden {
+    display: none;
+}
+
+h3.error { 
+    text-align: center;
+}
+
+.loading {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.imgLoading {
+    width: 25px;
+}
