@@ -8,6 +8,15 @@ header {
     margin-bottom: 20px;
 }
 
+.divLinkHome {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: .8em;
+    color: #fff;
+    text-decoration-line: none;
+}
+
 .logo {
     width: 40px;
     border: 1px solid #fff;

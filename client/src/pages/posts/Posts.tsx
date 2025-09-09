@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
-import Post from '../comps/post/Post';
+import Post from '../../comps/post/Post';
 // import myData from '../db/data.json';
 import "./posts.css";
 
 export type TypePost = {
+    id: number;
     img_url: string;
     description: string;
     count_likes: number;
@@ -43,11 +44,11 @@ export default function Posts() {
 
     return (
         <div className='posts'>
-            <h3 className={`loading ${hidden}`}>Loading posts... <img className='imgLoading' src='loading.gif' alt='loading' /></h3>
+            <h3 className={`loading ${hidden}`}>Loading posts... <img className='imgLoading' src={`${URL}/loading.gif`} alt='loading' /></h3>
             {error !== "" && <h3 className="error">{error}</h3>}
             {posts.map((obj) => (
                 <div className='divPost' key={obj.img_url}>
-                    <Post img_url={obj.img_url} description={obj.description} count_likes={obj.count_likes} count_dislikes={obj.count_dislikes} timestamp={obj.timestamp} username={obj.username} />
+                    <Post id={obj.id} img_url={obj.img_url} description={obj.description} count_likes={obj.count_likes} count_dislikes={obj.count_dislikes} timestamp={obj.timestamp} username={obj.username} />
                 </div>
             ))}
         </div>

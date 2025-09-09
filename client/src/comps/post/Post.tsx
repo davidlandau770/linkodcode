@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import "./post.css";
-import type { TypePost } from "../../pages/Posts";
+import type { TypePost } from "../../pages/posts/Posts";
+import { Link } from "react-router";
 
-export default function Post({ img_url, description, count_likes, count_dislikes, timestamp, username }: TypePost) {
+export default function Post({ id, img_url, description, count_likes, count_dislikes, timestamp, username }: TypePost) {
+    const URL = "http://localhost:3000"
     const [like, setLike] = useState<string>("off");
     const [dislike, setDislike] = useState<string>("off");
     const [countLikes, setCountLikes] = useState(0);
     const [countDisikes, setCountDisikes] = useState(0);
-    
+
     useEffect(() => {
         setCountLikes(count_likes)
         setCountDisikes(count_dislikes)
@@ -44,20 +46,22 @@ export default function Post({ img_url, description, count_likes, count_dislikes
     }
 
     return (
-        <div className="post">
-            <img className="postimg" src={`http://localhost:3000/${img_url}.png`} alt="post img" />
-            <p className="descriptionPost">{description}</p>
-            <div className="likes">
-                <div className="divCountLike">
-                    <img className="imgLike" src={`${like} like.png`} alt="like" onClick={addLike} />
-                    {countLikes > 0 && <p>{countLikes}</p>}
+        <Link to={`post/${id}`} className="linkPost" >
+            <div className="post">
+                <img className="postimg" src={`${URL}/${img_url}.png`} alt="post img" />
+                <p className="descriptionPost">{description}</p>
+                <div className="likes">
+                    <div className="divCountLike">
+                        <img className="imgLike" src={`${URL}/${like} like.png`} alt="like" onClick={addLike} />
+                        {countLikes > 0 && <p className="countLike">{countLikes}</p>}
+                    </div>
+                    <div className="divCountLike">
+                        <img className="imgLike" src={`${URL}/${dislike} dislike.png`} alt="dislike" onClick={addDislike} />
+                        {countDisikes > 0 && <p className="countLike">{countDisikes}</p>}
+                    </div>
                 </div>
-                <div className="divCountLike">
-                    <img className="imgLike" src={`${dislike} dislike.png`} alt="dislike" onClick={addDislike} />
-                    {countDisikes > 0 && <p>{countDisikes}</p>}
-                </div>
+                <p className="aboutPost"><span className="userName">{username}</span><span className="datePost">{timestamp}</span></p>
             </div>
-            <p className="aboutPost"><span className="userName">{username}</span><span className="datePost">{timestamp}</span></p>
-        </div>
+        </Link>
     )
 }

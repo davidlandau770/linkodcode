@@ -1,5 +1,5 @@
 import { getUsersDB } from "../DAL/accountDAL.js";
-import { createPostDB, deletePostDB, readPostsDB, updatePostDB } from "../DAL/postsDAL.js";
+import { createPostDB, deletePostDB, readPostDB, readPostsDB, updatePostDB } from "../DAL/postsDAL.js";
 
 const createPost = async (req, res) => {
     let response;
@@ -13,13 +13,13 @@ const createPost = async (req, res) => {
 
 const readPosts = async (req, res) => {
     let responsePosts;
-    try {        
+    try {
         responsePosts = await readPostsDB();
-    } catch (error) {        
+    } catch (error) {
         return res.status(500).json({ err: `readPosts: ${error}` });
     }
     let responseUsers;
-    try {        
+    try {
         responseUsers = await getUsersDB();
     } catch (error) {
         return res.status(500).json({ err: `getUsers: ${error}` });
@@ -51,9 +51,34 @@ const deletePost = async (req, res) => {
 
 }
 
+const readPost = async (req, res) => {
+    const postId = req.params.id;
+    const numPostId = Number(postId);
+    let responsePost;
+    try {
+        responsePost = await readPostDB(numPostId);
+    } catch (error) {
+        return res.status(500).json({ err: `readPostDB: ${error}` });
+    }
+    if (responsePost === null) {
+        return res.status(400).json({ msg: `invalid param` });
+    }
+    let responseUsers;
+    try {
+        responseUsers = await getUsersDB();
+    } catch (error) {
+        return res.status(500).json({ err: `getUsers: ${error}` });
+    }
+    const findUser = responseUsers.find((user) => user.id === responsePost.username_id)
+    responsePost.username = findUser.username
+
+    res.json(responsePost);
+}
+
 export {
     createPost,
     readPosts,
     updatePost,
-    deletePost
+    deletePost,
+    readPost
 }

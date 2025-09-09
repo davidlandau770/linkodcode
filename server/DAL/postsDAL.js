@@ -26,9 +26,15 @@ const deletePostDB = async (id, data) => {
     )
 }
 
+const readPostDB = async (postId) => {
+    const db = await connectToMongodb();
+    return db.collection('posts').findOne({ id: postId });
+}
+
 export {
     createPostDB,
     readPostsDB,
     updatePostDB,
-    deletePostDB
+    deletePostDB,
+    readPostDB
 }
