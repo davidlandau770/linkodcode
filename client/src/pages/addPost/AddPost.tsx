@@ -1,7 +1,7 @@
 import { useContext, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import { AuthContext } from "../../context/AuthContext";
-import type { Data } from "../../auth/login/Login";
+import "./addPost.css";
 
 export type AddPost = {
     imgAddress: string;
@@ -18,7 +18,6 @@ export default function AddPost() {
     const saveValues = useRef<AddPost>({ imgAddress: "", description: "" });
 
     const fetchAddPost = async () => {
-        let data: Data;
         setNote({ imgAddress: "", description: "" });
         if (saveValues.current.imgAddress && saveValues.current.description) {
             console.log(saveValues.current);
@@ -32,9 +31,7 @@ export default function AddPost() {
                     body: JSON.stringify(saveValues.current),
                     credentials: "include"
                 })
-                data = await response.json();
-
-                auth?.setUser({ ...auth.user, ["username"]: data?.currentUser?.username, ["permission"]: data?.currentUser?.permission })
+                const data = await response.json();
 
                 if (data.msg === "One or more of the values ​​is invalid") {
                     setAddClassData("errorDivAccount")
@@ -68,22 +65,26 @@ export default function AddPost() {
             setNote(errors);
         }
     }
+    console.log(auth);
 
     return (
-        <div className={`account ${addClassData}`}>
-            <h1 className="titleAccount">Add post</h1>
-            <form onSubmit={(e) => { e.preventDefault(); fetchAddPost(); }}>
-                <div className="inputsAccount">
-                    <p className="resultAccount">{resultServer}</p>
-                    <label className="labelAccount" htmlFor="imgAddress">image address (1 - 10)<span className="redColor">*</span>:</label>
-                    <input className="inputAccount" id="imgAddress" name="imgAddress" placeholder="Enter user name" onChange={(e) => saveValues.current.imgAddress = e.target.value} />
-                    <p className="errorsAccount">{note.imgAddress}</p>
-                    <label className="labelAccount" htmlFor="description">description<span className="redColor">*</span>:</label>
-                    <input className="inputAccount" id="description" name="description" placeholder="Enter description" onChange={(e) => saveValues.current.description = e.target.value} />
-                    <p className="errorsAccount">{note.description}</p>
-                </div>
-                <button className="btnAccount" type="submit">submit</button>
-            </form>
-        </div>
+        <>
+            {!auth?.user?.username && navigate("/account")}
+            <div className={`account ${addClassData}`}>
+                <h1 className="titleAccount">Add post</h1>
+                <form onSubmit={(e) => { e.preventDefault(); fetchAddPost(); }}>
+                    <div className="inputsAccount">
+                        <p className="resultAccount">{resultServer}</p>
+                        <label className="labelAccount" htmlFor="imgAddress">image address (1 - 10)<span className="redColor">*</span>:</label>
+                        <input className="inputAccount" id="imgAddress" name="imgAddress" placeholder="Enter user name" onChange={(e) => saveValues.current.imgAddress = e.target.value} />
+                        <p className="errorsAccount">{note.imgAddress}</p>
+                        <label className="labelAccount" htmlFor="description">description<span className="redColor">*</span>:</label>
+                        <textarea className="inputAccount" id="description" name="description" placeholder="Enter description" onChange={(e) => saveValues.current.description = e.target.value} />
+                        <p className="errorsAccount">{note.description}</p>
+                    </div>
+                    <button className="btnAccount" type="submit">submit</button>
+                </form>
+            </div>
+        </>
     )
 }

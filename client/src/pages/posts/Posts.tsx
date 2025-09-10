@@ -1,7 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Post from '../../comps/post/Post';
 // import myData from '../db/data.json';
 import "./posts.css";
+import { AuthContext } from '../../context/AuthContext';
+import { useNavigate } from 'react-router';
 
 export type TypePost = {
     id: number;
@@ -18,6 +20,8 @@ export default function Posts() {
     const [posts, setPosts] = useState<TypePost[]>([]);
     const [hidden, setHidden] = useState<"hidden" | "">("");
     const [error, setError] = useState<string>("");
+    const navigate = useNavigate();
+    const auth = useContext(AuthContext);
 
     const getAllPost = async () => {
         let data;
@@ -29,7 +33,7 @@ export default function Posts() {
             console.error("error")
         }
         console.log(data);
-        
+
         setHidden("hidden");
         if (data.err) {
             setError(data.err)
@@ -44,14 +48,17 @@ export default function Posts() {
     }, [])
 
     return (
-        <div className='posts'>
-            <h3 className={`loading ${hidden}`}>Loading posts... <img className='imgLoading' src={`${URL}/loading.gif`} alt='loading' /></h3>
-            {error !== "" && <h3 className="error">{error}</h3>}
-            {posts.map((obj) => (
-                <div className='divPost' key={obj.img_url}>
-                    <Post id={obj.id} img_url={obj.img_url} description={obj.description} count_likes={obj.count_likes} count_dislikes={obj.count_dislikes} timestamp={obj.timestamp} username={obj.username} />
-                </div>
-            ))}
-        </div>
+        <>
+            {!auth?.user?.username && navigate("/account")}
+            <div className='posts'>
+                <h3 className={`loading ${hidden}`}>Loading posts... <img className='imgLoading' src={`${URL}/loading.gif`} alt='loading' /></h3>
+                {error !== "" && <h3 className="error">{error}</h3>}
+                {posts.map((obj) => (
+                    <div className='divPost' key={obj.img_url}>
+                        <Post id={obj.id} img_url={obj.img_url} description={obj.description} count_likes={obj.count_likes} count_dislikes={obj.count_dislikes} timestamp={obj.timestamp} username={obj.username} />
+                    </div>
+                ))}
+            </div>
+        </>
     )
 }

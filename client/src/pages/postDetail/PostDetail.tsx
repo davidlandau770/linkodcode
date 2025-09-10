@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import type { TypePost } from "../posts/Posts";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import "./postDetail.css";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function PostDetail() {
     const URL = "http://localhost:3000";
@@ -14,6 +15,8 @@ export default function PostDetail() {
     const [dislike, setDislike] = useState<string>("off");
     const [countLikes, setCountLikes] = useState<number>(0);
     const [countDisikes, setCountDisikes] = useState<number>(0);
+    const navigate = useNavigate();
+    const auth = useContext(AuthContext);
 
     const loadPost = async () => {
         let data;
@@ -76,6 +79,7 @@ export default function PostDetail() {
 
     return (
         <>
+            {!auth?.user?.username && navigate("/account")}
             <h3 className={`loading ${hidden}`}>Loading post... <img className='imgLoading' src={`${URL}/loading.gif`} alt='loading icon' /></h3>
             {error !== "" && <h3 className="error">{error}</h3>}
             <div className={`postDetail ${show}`}>

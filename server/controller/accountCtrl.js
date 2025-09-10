@@ -15,7 +15,7 @@ const signup = async (req, res) => {
     } catch (error) {
         return res.status(500).json({ err: `getMaxIdUsers: ${error}` });
     }
-    
+
     const id = responseMaxID[0]?.id ? responseMaxID[0].id + 1 : 1;
     const name = req.body.username;
     const user = response.some(user => user.username === name)
@@ -27,15 +27,21 @@ const signup = async (req, res) => {
         id: id,
         username: name,
         password: hashedPassword,
+        permission: "user"
     }
-    let result
     try {
-        result = await addUserDB(newuser);
+        await addUserDB(newuser);
     } catch (error) {
         return res.status(500).json({ err: `Failed write data: ${error}` });
     }
-    console.log(newuser);
-    res.status(200).json({ msg: "successfully registered!" });
+    delete newuser.password;
+    let token;
+    try {
+        token = createToken(newuser);
+    } catch (error) {
+        return res.status(401).json({ getToken: error })
+    }
+    res.cookie("token", token, { httpOnly: true }).json({ msg: "successfully registered!", newuser });
 }
 
 const login = async (req, res) => {
@@ -56,13 +62,13 @@ const login = async (req, res) => {
     if (!isMatch) {
         return res.status(401).json({ msg: "Unauthorized" });
     }
+    delete currentUser.password;
     let token;
     try {
         token = createToken(currentUser);
     } catch (error) {
         return res.status(401).json({ getToken: error })
     }
-    delete currentUser.password;
     res.cookie("token", token, { httpOnly: true }).json({ msg: "Verified", currentUser });
 }
 
@@ -83,8 +89,21 @@ const createToken = (user) => {
     return token
 }
 
+const TokenVerification = () => {
+    let decoded;
+    try {
+        decoded = jwt.verify(token, process.env.JWT_SECRET);
+    } catch (err) {
+        console.error('Token verification failed:', err.message);
+    }
+    console.log("decoded: ", decoded);
+    return decoded;
+}
+
 export {
     signup,
     login,
     logout,
+    createToken,
+    TokenVerification
 }
