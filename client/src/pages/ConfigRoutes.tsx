@@ -7,6 +7,7 @@ import Register from "../auth/register/Register";
 import Logout from "../auth/logout/Logout";
 import PostDetail from "./postDetail/PostDetail";
 import AddPost from "./addPost/AddPost";
+import UserDetail from "./userDetail/UserDetail";
 
 export default function ConfigRoutes() {
     return (
@@ -19,6 +20,7 @@ export default function ConfigRoutes() {
                 <Route path='/logout' element={<Logout />} />
                 <Route path="/post/:postId" element={<PostDetail />} />
                 <Route path="/add post" element={<AddPost />} />
+                <Route path="/users/:userId" element={<UserDetail />} />
             </Route>
         </Routes>
     )

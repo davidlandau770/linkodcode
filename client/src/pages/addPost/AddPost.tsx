@@ -1,4 +1,4 @@
-import { useContext, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import { AuthContext } from "../../context/AuthContext";
 import "./addPost.css";
@@ -65,11 +65,14 @@ export default function AddPost() {
             setNote(errors);
         }
     }
-    console.log(auth);
 
+    useEffect(() => {
+            !auth?.user?.username && navigate("/account")
+    }, [navigate])
+    !auth?.user?.username && navigate("/account")
+    
     return (
         <>
-            {!auth?.user?.username && navigate("/account")}
             <div className={`account ${addClassData}`}>
                 <h1 className="titleAccount">Add post</h1>
                 <form onSubmit={(e) => { e.preventDefault(); fetchAddPost(); }}>
