@@ -11,6 +11,8 @@ export type TypePost = {
     description: string;
     count_likes: number;
     count_dislikes: number;
+    state_like: string;
+    state_dislike: string;
     timestamp: string;
     username: string;
 }
@@ -55,7 +57,7 @@ export default function Posts() {
                 {error !== "" && <h3 className="error">{error}</h3>}
                 {posts.map((obj) => (
                     <div className='divPost' key={obj.img_url}>
-                        <Post id={obj.id} img_url={obj.img_url} description={obj.description} count_likes={obj.count_likes} count_dislikes={obj.count_dislikes} timestamp={obj.timestamp} username={obj.username} />
+                        <Post id={obj.id} img_url={obj.img_url} description={obj.description} count_likes={obj.count_likes} count_dislikes={obj.count_dislikes} state_like={obj.state_like} state_dislike={obj.state_dislike} timestamp={obj.timestamp} username={obj.username} />
                     </div>
                 ))}
             </div>

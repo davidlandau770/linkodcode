@@ -3,10 +3,10 @@ import "./post.css";
 import type { TypePost } from "../../pages/posts/Posts";
 import { useNavigate } from "react-router";
 
-export default function Post({ id, img_url, description, count_likes, count_dislikes, timestamp, username }: TypePost) {
+export default function Post({ id, img_url, description, count_likes, count_dislikes, state_like, state_dislike, timestamp, username }: TypePost) {
     const URL = "http://localhost:3000"
-    const [like, setLike] = useState<string>("off");
-    const [dislike, setDislike] = useState<string>("off");
+    const [like, setLike] = useState<string>(state_like);
+    const [dislike, setDislike] = useState<string>(state_dislike);
     const [countLikes, setCountLikes] = useState(0);
     const [countDisikes, setCountDisikes] = useState(0);
     const navigate = useNavigate();
@@ -19,6 +19,24 @@ export default function Post({ id, img_url, description, count_likes, count_disl
     const addLike = (e: React.MouseEvent<Element, MouseEvent>) => {
         e.stopPropagation();
         if (like === "off") {
+            // חשבתי להספיק לעדכן את השרת אבל אני רואה שאני לא יזפיק לעדכן אותו בלייקים. ככל הנראה זה הדבר היחיד שחסר לי
+            // let response;
+            // try {
+            //     response = await fetch(`${URL}/post/addDislike`, {
+            //         headers: {
+            //             'Content-Type': 'application/json'
+            //         },
+            //         method: 'POST',
+            //         body: JSON.stringify({ count_likes: countLikes + 1, state_like: "on" }),
+            //         credentials: "include"
+            //     })
+            //     const data = await response.json();
+            //     console.log(data);
+            // }
+            // catch (error) {
+            //     console.error(`addLike: ${error}`);
+            // }
+
             setLike("on");
             setCountLikes((prev) => prev + 1)
             if (dislike === "on") {
@@ -55,11 +73,11 @@ export default function Post({ id, img_url, description, count_likes, count_disl
                 <p className="descriptionPost">{description}</p>
                 <div className="likes">
                     <div className="divCountLike">
-                        <img className="imgLike" src={`${URL}/${like} like.png`} alt="like" onClick={(e: React.MouseEvent<Element, MouseEvent>) : void => addLike(e)} />
+                        <img className="imgLike" src={`${URL}/${like} like.png`} alt="like" onClick={(e: React.MouseEvent<Element, MouseEvent>): void => addLike(e)} />
                         {countLikes > 0 && <p className="countLike">{countLikes}</p>}
                     </div>
                     <div className="divCountLike">
-                        <img className="imgLike" src={`${URL}/${dislike} dislike.png`} alt="dislike" onClick={(e: React.MouseEvent<Element, MouseEvent>) : void => addDislike(e)} />
+                        <img className="imgLike" src={`${URL}/${dislike} dislike.png`} alt="dislike" onClick={(e: React.MouseEvent<Element, MouseEvent>): void => addDislike(e)} />
                         {countDisikes > 0 && <p className="countLike">{countDisikes}</p>}
                     </div>
                 </div>

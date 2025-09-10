@@ -1,5 +1,5 @@
 import { getUsersDB } from "../DAL/accountDAL.js";
-import { createPostDB, getMaxIdDB, readPostDB, readPostsDB } from "../DAL/postsDAL.js";
+import { createPostDB, getMaxIdDB, readPostDB, readPostsDB, updatePostDB } from "../DAL/postsDAL.js";
 import { tokenVerification } from "./accountCtrl.js";
 
 const createPost = async (req, res) => {
@@ -24,9 +24,11 @@ const createPost = async (req, res) => {
         id: id,
         img_url: body.imgAddress,
         description: body.description,
-        username_id: 1,
+        username_id: result.id,
         count_likes: 0,
         count_dislikes: 0,
+        state_like: "off",
+        state_dislike: "off",
         timestamp: new Date().toLocaleString()
     }
     try {
@@ -91,8 +93,28 @@ const readPost = async (req, res) => {
     res.json(responsePost);
 }
 
+const addLikeToPost = async (req, res) => {
+    // const checkToken = tokenVerification(req.cookies.token);
+    // if (!checkToken) {
+    //     return res.status(403).json({ msg: "No permission" })
+    // }
+
+    // const result = updatePostDB({count_likes: req.body.count_likes, state_like: req.body.state_like})
+    // res.json(result)
+}
+
+const addDislikeToPost = async (req, res) => {
+    // const result = tokenVerification(req.cookies.token);
+    // if (!result) {
+    //     return res.status(403).json({ msg: "No permission" })
+    // }
+    // updatePostDB({count_dislikes: "", state_dislike: ""})
+}
+
 export {
     createPost,
     readPosts,
-    readPost
+    readPost,
+    addLikeToPost,
+    addDislikeToPost
 }
