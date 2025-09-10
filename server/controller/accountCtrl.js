@@ -9,7 +9,7 @@ const signup = async (req, res) => {
     } catch (error) {
         return res.status(500).json({ err: `getUsers: ${error}` });
     }
-    let responseMaxID
+    let responseMaxID;
     try {
         responseMaxID = await getMaxIdDB();
     } catch (error) {
@@ -18,11 +18,19 @@ const signup = async (req, res) => {
 
     const id = responseMaxID[0]?.id ? responseMaxID[0].id + 1 : 1;
     const name = req.body.username;
-    const user = response.some(user => user.username === name)
+    const user = response.some(user => user.username === name);
+    const password = req.body.password;
+    if (!name || !password) {
+        return res.status(400).json({ msg: "Username and password are required." })
+    }
     if (user) {
         return res.status(409).json({ msg: "The username already exists" });
     }
-    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    const lengthPassword = password.length;
+    if (lengthPassword < 4) {
+        return res.status(400).json({ msg: "Password must contain at least 4 characters."})
+    }
+    const hashedPassword = await bcrypt.hash(password, 10);
     const newuser = {
         id: id,
         username: name,

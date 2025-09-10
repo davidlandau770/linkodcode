@@ -1,7 +1,7 @@
 import { useContext, useRef, useState } from "react"
 import { Link, useNavigate } from "react-router";
 import { URL, type Account, type Data } from "../login/Login";
-import { AuthContext } from "../../context/authContext";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function Register() {
   const auth = useContext(AuthContext);
@@ -13,7 +13,7 @@ export default function Register() {
 
   const fetchRegister = async () => {
     let data: Data;
-    setNote({ username: "", password: "" });
+    // setNote({ username: "", password: "" });
     if (account.current.username && account.current.password) {
       try {
         const response = await fetch(`${URL}/signup`, {
@@ -28,9 +28,23 @@ export default function Register() {
         
         auth?.setUser({ ...auth.user, ["username"]: data?.currentUser?.username, ["permission"]: data?.currentUser?.permission })
 
-        if (data.msg === "The username already exists") {
+        if (data.msg === "Username and password are required.") {
           setAddClassData("errorDivAccount");
-          setNote({ ...note, ["username"]: data.msg, ["password"]: "" });
+          setNote({ ["username"]: "", ["password"]: "" });
+          setTimeout(() => {
+            setAddClassData("");
+          }, 200);
+        }
+        else if (data.msg === "The username already exists") {
+          setAddClassData("errorDivAccount");
+          setNote({ ["username"]: data.msg, ["password"]: "" });
+          setTimeout(() => {
+            setAddClassData("");
+          }, 200);
+        }
+        else if (data.msg === "Password must contain at least 4 characters.") {
+          setAddClassData("errorDivAccount");
+          setNote({ ["username"]: "", ["password"]: data.msg });
           setTimeout(() => {
             setAddClassData("");
           }, 200);
@@ -44,7 +58,7 @@ export default function Register() {
           }, 1000);
         }
         else {
-          setNote({ ...note, ["username"]: "", ["password"]: "" })
+          setResult("General error")
         }
       } catch (error) {
         console.error(`register: ${error}`);

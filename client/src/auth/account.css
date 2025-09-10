@@ -1,8 +1,8 @@
 .account {
     text-align: center;
     min-width: 250px;
-    max-width: 45vw;
     max-width: 500px;
+    max-width: 85%;
     margin: auto;
     padding: 30px;
     background-color: rgb(241, 239, 255);
