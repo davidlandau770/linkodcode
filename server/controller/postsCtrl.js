@@ -1,7 +1,13 @@
 import { getUsersDB } from "../DAL/accountDAL.js";
-import { createPostDB, deletePostDB, getMaxIdDB, readPostDB, readPostsDB, updatePostDB } from "../DAL/postsDAL.js";
+import { createPostDB, getMaxIdDB, readPostDB, readPostsDB } from "../DAL/postsDAL.js";
+import { TokenVerification } from "./accountCtrl.js";
 
 const createPost = async (req, res) => {
+    const result = TokenVerification(req.cookies.token);
+    if (!result) {
+        return res.status(403).json({ msg: "No permission" })
+    }
+
     const body = req.body;
     let responseMaxID
     try {
@@ -23,9 +29,8 @@ const createPost = async (req, res) => {
         count_dislikes: 0,
         timestamp: new Date().toLocaleString()
     }
-    let response;
     try {
-        response = await createPostDB(obj);
+        await createPostDB(obj);
     } catch (error) {
         return res.status(500).json({ err: `createPost: ${error}` });
     }
@@ -33,6 +38,11 @@ const createPost = async (req, res) => {
 }
 
 const readPosts = async (req, res) => {
+    const result = TokenVerification(req.cookies.token);
+    if (!result) {
+        return res.status(403).json({ msg: "No permission" })
+    }
+
     let responsePosts;
     try {
         responsePosts = await readPostsDB();
@@ -52,27 +62,12 @@ const readPosts = async (req, res) => {
     res.json(responsePosts);
 }
 
-const updatePost = async (req, res) => {
-    let response;
-    try {
-        response = await updatePostDB();
-    } catch (error) {
-        return res.status(500).json({ err: `updatePost: ${error}` });
-    }
-
-}
-
-const deletePost = async (req, res) => {
-    let response;
-    try {
-        response = await deletePostDB();
-    } catch (error) {
-        return res.status(500).json({ err: `deletePost: ${error}` });
-    }
-
-}
-
 const readPost = async (req, res) => {
+    const result = TokenVerification(req.cookies.token);
+    if (!result) {
+        return res.status(403).json({ msg: "No permission" })
+    }
+    
     const postId = req.params.id;
     const numPostId = Number(postId);
     let responsePost;
@@ -99,7 +94,5 @@ const readPost = async (req, res) => {
 export {
     createPost,
     readPosts,
-    updatePost,
-    deletePost,
     readPost
 }

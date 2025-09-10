@@ -89,14 +89,13 @@ const createToken = (user) => {
     return token
 }
 
-const TokenVerification = () => {
+const TokenVerification = (token) => {
     let decoded;
     try {
         decoded = jwt.verify(token, process.env.JWT_SECRET);
     } catch (err) {
-        console.error('Token verification failed:', err.message);
+        return console.error('Token verification failed:', err.message);
     }
-    console.log("decoded: ", decoded);
     return decoded;
 }
 
