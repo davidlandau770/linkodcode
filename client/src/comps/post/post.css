@@ -1,6 +1,7 @@
 .linkPost {
     color: #333;
     text-decoration-line: none;
+    cursor: pointer;
 }
 
 .post {

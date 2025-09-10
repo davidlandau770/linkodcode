@@ -1,15 +1,15 @@
 .posts {
     width: 80%;
-    margin: auto;
+    margin: 28px auto;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
+    gap: 28px;
 }
 
 .divPost {
-    max-width: 300px;
+    width: 300px;
     min-width: 200px;
-    margin: 10px;
 }
 
 h3.hidden {

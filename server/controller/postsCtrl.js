@@ -4,28 +4,25 @@ import { createPostDB, deletePostDB, getMaxIdDB, readPostDB, readPostsDB, update
 const createPost = async (req, res) => {
     const body = req.body;
     let responseMaxID
-    let url_img;
     try {
         responseMaxID = await getMaxIdDB();
-        url_img = Number(body.url_img);
     } catch (error) {
         return res.status(500).json({ err: `getMaxIdPosts: ${error}` });
     }
+    const img_url = Number(body.imgAddress);
     const id = responseMaxID[0]?.id ? responseMaxID[0].id + 1 : 1;
-    console.log(body);
-    if (!body.url_img || !body.description || url_img < 0 || url_img > 10) {
+    if (!body.imgAddress || !body.description || img_url < 0 || img_url > 10) {
         return res.status(400).json({ msg: `One or more of the values ​​is invalid` });
     }
     const obj = {
         id: id,
-        url_img: body.imgAddress,
+        img_url: body.imgAddress,
         description: body.description,
         username_id: 1,
         count_likes: 0,
         count_dislikes: 0,
         timestamp: new Date().toLocaleString()
     }
-    console.log(obj);
     let response;
     try {
         response = await createPostDB(obj);

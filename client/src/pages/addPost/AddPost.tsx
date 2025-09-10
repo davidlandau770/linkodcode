@@ -51,9 +51,9 @@ export default function AddPost() {
                         }, 1000);
                     }
                 }
-                data.msg === "One or more of the values ​​is invalid" ? setNote({ ...note, ["imgAddress"]: data.msg, ["description"]: "" }) : data.msg === "Upload completed successfully!" ? setNote({ ...note, ["imgAddress"]: "", ["description"]: data.msg }) : setNote({ ...note, ["imgAddress"]: "", ["description"]: "" })
+                data.msg === "One or more of the values ​​is invalid" ? setNote({ ...note, ["imgAddress"]: data.msg, ["description"]: "" }) : data.msg === "Upload completed successfully!" ? setResult(data.msg) : setNote({ ...note, ["imgAddress"]: "", ["description"]: "" })
             } catch (error) {
-                console.error(`login: ${error}`);
+                console.error(`AddPost: ${error}`);
             }
         }
         else {

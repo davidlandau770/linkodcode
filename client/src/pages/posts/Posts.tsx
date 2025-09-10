@@ -28,6 +28,8 @@ export default function Posts() {
         catch {
             console.error("error")
         }
+        console.log(data);
+        
         setHidden("hidden");
         if (data.err) {
             setError(data.err)
@@ -40,7 +42,6 @@ export default function Posts() {
     useEffect(() => {
         getAllPost();
     }, [])
-
 
     return (
         <div className='posts'>
