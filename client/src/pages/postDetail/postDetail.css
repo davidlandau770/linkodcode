@@ -3,13 +3,20 @@
     flex-direction: column;
     align-items: center;
     margin: auto;
-    /* border: 1px solid red; */
-    width: 60%;
+    padding: 0 30px;
+    border-left: 1px solid #013e6d4d;
+    border-right: 1px solid #013e6d4d;
+    width: 70%;
 }
 
 .postImg {
     max-width: 50vh;
     min-width: 180px;
+}
+
+.hr {
+    width: 100%;
+    margin-top: 10px;
 }
 
 .spacePostDetail {

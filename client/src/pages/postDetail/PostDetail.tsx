@@ -81,6 +81,7 @@ export default function PostDetail() {
             <div className={`postDetail ${show}`}>
                 <img className="postImg spacePostDetail" src={`http://localhost:3000/${posts?.img_url}.png`} alt="post img" />
                 <p className="descriptionPost">{posts?.description}</p>
+                <hr className="hr" />
                 <div className="likes">
                     <div className="divCountLike spacePostDetail">
                         <img className="imgLike" src={`${URL}/${like} like.png`} alt="icon like" onClick={addLike} />
