@@ -1,9 +1,8 @@
 .account {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-width: 300px;
-    min-width: 50%;
+    text-align: center;
+    min-width: 250px;
+    max-width: 45vw;
+    max-width: 500px;
     margin: auto;
     padding: 30px;
     background-color: rgb(241, 239, 255);
@@ -21,7 +20,7 @@
 }
 
 .btnAccount {
-    width: 45vw;
+    width: 100%;
     min-width: 200px;
     padding: 15px;
     font-size: 1em;

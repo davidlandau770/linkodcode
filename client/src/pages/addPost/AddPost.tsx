@@ -67,27 +67,25 @@ export default function AddPost() {
     }
 
     useEffect(() => {
-            !auth?.user?.username && navigate("/account")
+        !auth?.user?.username && navigate("/account");
     }, [navigate])
-    !auth?.user?.username && navigate("/account")
-    
+    !auth?.user?.username && navigate("/account");
+
     return (
-        <>
-            <div className={`account ${addClassData}`}>
-                <h1 className="titleAccount">Add post</h1>
-                <form onSubmit={(e) => { e.preventDefault(); fetchAddPost(); }}>
-                    <div className="inputsAccount">
-                        <p className="resultAccount">{resultServer}</p>
-                        <label className="labelAccount" htmlFor="imgAddress">image address (1 - 10)<span className="redColor">*</span>:</label>
-                        <input className="inputAccount" id="imgAddress" name="imgAddress" placeholder="Enter user name" onChange={(e) => saveValues.current.imgAddress = e.target.value} />
-                        <p className="errorsAccount">{note.imgAddress}</p>
-                        <label className="labelAccount" htmlFor="description">description<span className="redColor">*</span>:</label>
-                        <textarea className="inputAccount" id="description" name="description" placeholder="Enter description" onChange={(e) => saveValues.current.description = e.target.value} />
-                        <p className="errorsAccount">{note.description}</p>
-                    </div>
-                    <button className="btnAccount" type="submit">submit</button>
-                </form>
-            </div>
-        </>
+        <div className={`account ${addClassData}`}>
+            <h1 className="titleAccount">Add post</h1>
+            <form onSubmit={(e) => { e.preventDefault(); fetchAddPost(); }}>
+                <div className="inputsAccount">
+                    <p className="resultAccount">{resultServer}</p>
+                    <label className="labelAccount" htmlFor="imgAddress">image address (1 - 10)<span className="redColor">*</span>:</label>
+                    <input className="inputAccount" id="imgAddress" name="imgAddress" placeholder="Enter user name" onChange={(e) => saveValues.current.imgAddress = e.target.value} />
+                    <p className="errorsAccount">{note.imgAddress}</p>
+                    <label className="labelAccount" htmlFor="description">description<span className="redColor">*</span>:</label>
+                    <textarea className="inputAccount" id="description" name="description" placeholder="Enter description" onChange={(e) => saveValues.current.description = e.target.value} />
+                    <p className="errorsAccount">{note.description}</p>
+                </div>
+                <button className="btnAccount" type="submit">submit</button>
+            </form>
+        </div>
     )
 }

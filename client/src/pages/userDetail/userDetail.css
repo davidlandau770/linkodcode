@@ -1,0 +1,19 @@
+.userPage {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 80%;
+    margin: auto;
+}
+
+.textUserPage {
+    padding: 18px 0;
+    line-height: 1.4;
+}
+
+.btnLogout {
+    padding: 15px 40px ;
+    border: 1px solid #999;
+    border-radius: 8px;
+    font-size: .9em;
+}

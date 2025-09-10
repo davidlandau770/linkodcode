@@ -46,9 +46,10 @@ export default function Posts() {
         getAllPost();
     }, [])
 
+    !auth?.user?.username && navigate("/account");
+
     return (
         <>
-            {!auth?.user?.username && navigate("/account")}
             <div className='posts'>
                 <h3 className={`loading ${hidden}`}>Loading posts... <img className='imgLoading' src={`${URL}/loading.gif`} alt='loading' /></h3>
                 {error !== "" && <h3 className="error">{error}</h3>}

@@ -77,9 +77,10 @@ export default function PostDetail() {
         }
     }
 
+    !auth?.user?.username && navigate("/account");
+
     return (
         <>
-            {!auth?.user?.username && navigate("/account")}
             <h3 className={`loading ${hidden}`}>Loading post... <img className='imgLoading' src={`${URL}/loading.gif`} alt='loading icon' /></h3>
             {error !== "" && <h3 className="error">{error}</h3>}
             <div className={`postDetail ${show}`}>
