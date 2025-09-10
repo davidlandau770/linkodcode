@@ -89,7 +89,7 @@ const createToken = (user) => {
     return token
 }
 
-const TokenVerification = (token) => {
+const tokenVerification = (token) => {
     let decoded;
     try {
         decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -104,5 +104,5 @@ export {
     login,
     logout,
     createToken,
-    TokenVerification
+    tokenVerification
 }

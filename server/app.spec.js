@@ -1,7 +1,7 @@
 import { strictEqual } from "node:assert";
 import { test, describe } from "node:test";
 import { config } from "dotenv";
-import { createToken, TokenVerification } from "./controller/accountCtrl.js";
+import { createToken, tokenVerification } from "./controller/accountCtrl.js";
 config();
 
 
@@ -11,9 +11,10 @@ describe("valid function", () => {
         strictEqual(token.length, 180);
         strictEqual(typeof token, typeof "");
     })
-    test("TokenVerification", () => {
+    test("tokenVerification", () => {
         const token = createToken({ username: "david", password: "bbb", permission: "user" });
-        strictEqual(TokenVerification(token, process.env.JWT_SECRET), "verified");
-        strictEqual(TokenVerification(token, "process.env.JWT_SECRET"), "unverified");
+        const token2 = token.slice(0, -2) + "ab"        
+        strictEqual(typeof tokenVerification(token), typeof {});
+        strictEqual(tokenVerification(token2), undefined);
     })
 })

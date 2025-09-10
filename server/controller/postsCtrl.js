@@ -1,9 +1,9 @@
 import { getUsersDB } from "../DAL/accountDAL.js";
 import { createPostDB, getMaxIdDB, readPostDB, readPostsDB } from "../DAL/postsDAL.js";
-import { TokenVerification } from "./accountCtrl.js";
+import { tokenVerification } from "./accountCtrl.js";
 
 const createPost = async (req, res) => {
-    const result = TokenVerification(req.cookies.token);
+    const result = tokenVerification(req.cookies.token);
     if (!result) {
         return res.status(403).json({ msg: "No permission" })
     }
@@ -38,7 +38,7 @@ const createPost = async (req, res) => {
 }
 
 const readPosts = async (req, res) => {
-    const result = TokenVerification(req.cookies.token);
+    const result = tokenVerification(req.cookies.token);
     if (!result) {
         return res.status(403).json({ msg: "No permission" })
     }
@@ -63,11 +63,11 @@ const readPosts = async (req, res) => {
 }
 
 const readPost = async (req, res) => {
-    const result = TokenVerification(req.cookies.token);
+    const result = tokenVerification(req.cookies.token);
     if (!result) {
         return res.status(403).json({ msg: "No permission" })
     }
-    
+
     const postId = req.params.id;
     const numPostId = Number(postId);
     let responsePost;
